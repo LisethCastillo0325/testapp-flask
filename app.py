@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from datetime import datetime
 
 
@@ -7,8 +8,10 @@ app = Flask(__name__)
 #
 # Parametros de configuracion a la base de datos
 #
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:Admin123456@localhost:5432/todo"
+
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 #
 # A continuacion se crea un modelo o esquema para la base de datos
