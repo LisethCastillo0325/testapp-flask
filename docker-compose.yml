@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  app: 
+    build:
+      context: .
+      dockerfile: ./compose/flask/Dockerfile
+    image: myapp-flask-compose
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: .
+      dockerfile: ./compose/postgres/Dockerfile
+    image: myapp-flask-postgres-compose
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "Admin123456"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
